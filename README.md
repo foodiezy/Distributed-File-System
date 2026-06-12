@@ -4,7 +4,7 @@ A secure, desktop-based Distributed File System application built with JavaFX an
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 * **Dual Database Synchronization**: Automatically syncs user credentials and file metadata between a local SQLite database (`comp20081.db`) and a remote MySQL server to maintain consistency across local and distributed environments.
 * **Secure User Authentication**: Uses PBKDF2 hashing (`PBKDF2WithHmacSHA1`) combined with a unique salt value stored locally in a `.salt` file to protect user passwords. Supports user registration, profile updates, and account deletion.
@@ -13,7 +13,7 @@ A secure, desktop-based Distributed File System application built with JavaFX an
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 * **Front-end**: JavaFX with FXML (GUI layout and controllers)
 * **Build System**: Apache Maven
@@ -22,7 +22,7 @@ A secure, desktop-based Distributed File System application built with JavaFX an
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 .
@@ -51,7 +51,7 @@ A secure, desktop-based Distributed File System application built with JavaFX an
 
 ---
 
-## ⚙️ Configuration & Setup
+## Configuration & Setup
 
 ### Database Tables Schema
 The application automatically checks and constructs the following SQLite / MySQL tables at startup:
