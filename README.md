@@ -13,6 +13,51 @@ A secure, desktop-based Distributed File System application built with JavaFX an
 
 ---
 
+## Architecture
+
+```mermaid
+flowchart LR
+    subgraph Client["JavaFX Desktop Client"]
+        UI["FXML Views<br/>(login / register / dashboard)"] --> CTRL["Controllers"]
+    end
+
+    CTRL --> DB["DB Layer<br/>(DB.java)"]
+
+    subgraph Sec["Security Layer"]
+        AUTH["PBKDF2-HMAC-SHA1<br/>10,000 iterations + local salt"]
+        ENC["Zip4j<br/>compress + AES-256 encrypt"]
+    end
+
+    DB --> AUTH
+    DB --> ENC
+
+    subgraph Store["Dual Database Sync"]
+        SQLITE[("SQLite<br/>local")] <-->|"credentials + metadata sync"| MYSQL[("MySQL<br/>remote")]
+    end
+
+    ENC -->|"encrypted BLOBs"| Store
+    DB --> Store
+```
+
+**Secure upload flow:**
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant C as JavaFX Client
+    participant S as Security Layer
+    participant D as SQLite / MySQL
+
+    U->>C: Select file to upload
+    C->>S: Compress + encrypt (Zip4j, AES-256)
+    S->>D: Store as BLOB with metadata
+    D-->>D: Sync SQLite ⇄ MySQL
+    D-->>C: Confirm + update file view
+    Note over U,D: Sharing grants per-user access levels<br/>via the FileAuthorisation table
+```
+
+---
+
 ## Technology Stack
 
 * **Front-end**: JavaFX with FXML (GUI layout and controllers)
